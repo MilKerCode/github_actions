@@ -1,28 +1,29 @@
-name: Exercice complet
+name: Exercice Complet
 on: workflow_dispatch
 
 env:
-  DAY_OF_WEEK: Lundi ## Variable d'environnement globale (accessible partout)
+  DAY_OF_WEEK: Lundi
 
 jobs:
   greeting_job:
     runs-on: ubuntu-latest
-    # On connecte ce job à l'environnement que vous avez créé sur GitHub
     environment: Production 
     
     env:
-      Greeting: Salut ## Variable d'environnement pour ce job spécifique
+      Greeting: Salut 
 
     steps:
       - name: "Étape 1 : Salutation (Variables classiques)"
-        run: echo "$Greeting $First_Name. Nous sommes $DAY_OF_WEEK!"
+        run: echo "$Greeting $First_Name. We are $DAY_OF_WEEK!"
         env:
-          First_Name: Mona ## Variable d'environnement uniquement pour cette étape
+          First_Name: Mona 
 
-      - name: "Étape 2 : Test de sécurité (GitHub Secret)"
-        # On appelle le secret créé dans l'interface GitHub
+      - name: "Étape 2 : Utilisation sécurisée du Secret"
         env:
-          MON_SECRET_A_AFFICHER: ${{ secrets.MON_SECRET_TEST }} 
+          # Le secret est injecté de manière invisible dans l'environnement de l'étape
+          MON_SECRET_A_UTILISER: ${{ secrets.MON_SECRET_TEST }} 
         run: |
-          echo "Tentative d'affichage du secret d'environnement :"
-          echo "La valeur de mon secret est : $MON_SECRET_A_AFFICHER"
+          echo "Le secret est actuellement utilisé en arrière-plan par le système."
+          # Ici, au lieu d'un 'echo' pour l'afficher, on simule une action 
+          # (par exemple, l'envoyer à un script Python ou s'authentifier)
+          # IMPORTANT : On ne l'affiche JAMAIS avec un echo sur un dépôt public
